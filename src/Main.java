@@ -2,8 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Timer;
 
 public class Main {
@@ -123,16 +128,17 @@ public class Main {
 
     public static void main(String[] args) {
 
-        wordList.add("marta");
-        wordList.add("jest");
-        wordList.add("super");
-        wordList.add("kocham");
-        wordList.add("marte");
-        wordList.add("piekna");
-        wordList.add("cudowna");
-        wordList.add("aaa");
-        wordList.add("wspaniala");
-        wordList.add("kaczki");
+        try {
+            URL url = new URL("https://raw.githubusercontent.com/hejs22/WordsPerMinute/master/wordBank.txt");
+            Scanner scanner = new Scanner(url.openStream());
+            while (scanner.hasNextLine()) {
+                wordList.add(scanner.nextLine());
+            }
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         word1 = wordList.get(rand.nextInt(wordList.size()));
         word2 = wordList.get(rand.nextInt(wordList.size()));
